@@ -12,7 +12,7 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 
 public class MySecondTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		WebDriver driver = null;
         try {
 		ChromeDriverManager.getInstance().setup();

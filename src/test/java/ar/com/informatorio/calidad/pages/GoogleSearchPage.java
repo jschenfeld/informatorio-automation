@@ -4,21 +4,17 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class GoogleSearchPage {
-
-	private WebDriver driver;
-
-	@FindBy(xpath = "//input[@title='Buscar']")
+public class GoogleSearchPage extends BasePage{
+	
+	@FindBy(name = "q")
 	private WebElement searchTextBox;
 	
-	@FindBy(xpath = "//input[@value='Buscar con Google']")
+	@FindBy(name="btnG")
 	private WebElement searchButton;
 	
 	public GoogleSearchPage(WebDriver driver){
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
+		super(driver);
 	}
 	
 	public GoogleResultPage search(String query){
