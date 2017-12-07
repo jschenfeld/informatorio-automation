@@ -2,30 +2,17 @@ package ar.com.informatorio.calidad.test;
 
 import static org.testng.Assert.assertEquals;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ar.com.informatorio.calidad.pages.GoogleResultPage;
 import ar.com.informatorio.calidad.pages.GoogleSearchPage;
 import ar.com.informatorio.calidad.pages.WikiArticlePage;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 
-public class MyThirdTest {
-	
-	private WebDriver driver;
-	
-	@BeforeMethod
-	public void setUp() {
-		ChromeDriverManager.getInstance().setup();
-		driver = new ChromeDriver();
-		driver.get("https://www.google.com.ar");
-	}
-	
+public class MyFourthtest extends BaseTest {
+
 	@Test
 	public void searchResistenciaInGoogle(){
+		driver.get("https://www.google.com.ar");
 		GoogleSearchPage searchPage = new GoogleSearchPage(driver);
 		GoogleResultPage resultPage = searchPage.search("Resistencia wiki");
 		WikiArticlePage articlePage = resultPage.openFirstResult(WikiArticlePage.class);
@@ -34,6 +21,7 @@ public class MyThirdTest {
 	
 	@Test
 	public void searchCorrientesInGoogle(){
+		driver.get("https://www.google.com.ar");
 		GoogleSearchPage searchPage = new GoogleSearchPage(driver);
 		GoogleResultPage resultPage = searchPage.search("Corrientes capital wiki");
 		WikiArticlePage articlePage = resultPage.openFirstResult(WikiArticlePage.class);
@@ -42,6 +30,7 @@ public class MyThirdTest {
 	
 	@Test
 	public void searchFormosaInGoogle(){
+		driver.get("https://www.google.com.ar");
 		GoogleSearchPage searchPage = new GoogleSearchPage(driver);
 		GoogleResultPage resultPage = searchPage.search("Formosa capital wiki");
 		WikiArticlePage articlePage = resultPage.openFirstResult(WikiArticlePage.class);
@@ -50,17 +39,10 @@ public class MyThirdTest {
 	
 	@Test
 	public void searchRosarioInGoogle(){
+		driver.get("https://www.google.com.ar");
 		GoogleSearchPage searchPage = new GoogleSearchPage(driver);
 		GoogleResultPage resultPage = searchPage.search("Rosario wiki");
 		WikiArticlePage articlePage = resultPage.openFirstResult(WikiArticlePage.class);
 		assertEquals("Rosario (Argentina)", articlePage.getFirstHeadingText());
 	}
-	
-	@AfterMethod
-	public void tearDown() {
-		if (null != driver) {
-			driver.quit();
-		}
-	}
-	
 }

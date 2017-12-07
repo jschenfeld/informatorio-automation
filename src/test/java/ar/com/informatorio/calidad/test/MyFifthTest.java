@@ -8,7 +8,7 @@ import ar.com.informatorio.calidad.pages.GoogleResultPage;
 import ar.com.informatorio.calidad.pages.GoogleSearchPage;
 import ar.com.informatorio.calidad.pages.WikiArticlePage;
 
-public class MyFourthTest extends BaseTest {
+public class MyFifthTest extends BaseParameterTest {
 	
 	@DataProvider(name = "QueryProvider")
 	public static Object[][] queryAndResult() {
@@ -22,6 +22,6 @@ public class MyFourthTest extends BaseTest {
 		GoogleSearchPage googleMainPage = new GoogleSearchPage(driver);
 		GoogleResultPage googleResultPage = googleMainPage.search(query);
 		WikiArticlePage wikiArticlePage = googleResultPage.openFirstResult(WikiArticlePage.class);
-		Assert.assertEquals(result, wikiArticlePage.getFirstHeadingText());
+		Assert.assertEquals(wikiArticlePage.getFirstHeadingText(), result);
 	}
 }

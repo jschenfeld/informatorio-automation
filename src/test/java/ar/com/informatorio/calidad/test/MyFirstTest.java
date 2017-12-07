@@ -5,6 +5,7 @@ import static org.testng.Assert.assertEquals;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
@@ -17,11 +18,20 @@ public class MyFirstTest {
 		ChromeDriverManager.getInstance().setup();
 		driver = new ChromeDriver();
 		driver.get("https://google.com.ar");
-		driver.findElement(By.xpath("//input[@title='Buscar']")).clear();
-		driver.findElement(By.xpath("//input[@title='Buscar']")).sendKeys("Resistencia wiki", Keys.TAB);
-		driver.findElement(By.xpath("//input[@value='Buscar con Google']")).click();
-		driver.findElement(By.xpath("(//*[@class='g']/descendant::a)[1]")).click();
-		assertEquals("Resistencia (ciudad)", driver.findElement(By.id("firstHeading")).getText());
+		
+		WebElement searchTextBox = driver.findElement(By.name("q"));
+		searchTextBox.clear();
+		searchTextBox.sendKeys("Resistencia wiki", Keys.TAB);
+		
+		WebElement searchButton = driver.findElement(By.name("btnK")); 
+		searchButton.click();
+		
+		WebElement firstResult = driver.findElement(By.xpath("(//*[@class='g']/descendant::a)[1]"));
+		firstResult.click();
+		
+		WebElement firstHeading = driver.findElement(By.id("firstHeading"));
+		
+		assertEquals("Resistencia (ciudad)", firstHeading.getText());
         } finally {
         	if(null != driver){
         		driver.quit();

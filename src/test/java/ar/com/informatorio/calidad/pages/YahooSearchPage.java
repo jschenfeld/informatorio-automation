@@ -4,24 +4,27 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class GoogleSearchPage extends BasePage {
+public class YahooSearchPage {
+	private WebDriver driver;
 
-	@FindBy(name = "q")
+	@FindBy(xpath = "//input[@name='p']")
 	private WebElement searchTextBox;
 
-	@FindBy(name = "btnK")
+	@FindBy(xpath = "//button[@class='sbb']")
 	private WebElement searchButton;
 
-	public GoogleSearchPage(WebDriver driver) {
-		super(driver);
+	public YahooSearchPage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
 	}
 
-	public GoogleResultPage search(String query) {
+	public YahooResultPage search(String query) {
 		searchTextBox.clear();
 		searchTextBox.sendKeys(query);
 		searchTextBox.sendKeys(Keys.TAB);
 		searchButton.click();
-		return new GoogleResultPage(driver);
+		return new YahooResultPage(driver);
 	}
 }
