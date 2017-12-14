@@ -1,4 +1,4 @@
-package ar.com.informatorio.calidad.test;
+package ar.com.informatorio.calidad.tests;
 
 import static org.testng.Assert.assertEquals;
 
