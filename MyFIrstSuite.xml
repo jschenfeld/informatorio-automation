@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="MyFirstSuite">
+	
+	<test name="Google Search on Chrome">
+		<parameter name="browser" value="chrome" />
+		<parameter name="url" value="https://google.com.ar" />
+
+		<classes>
+			<class name="ar.com.informatorio.calidad.tests.MyFifthTest" />
+		</classes>
+	</test>
+
+	<test name="Google Search on Firefox">
+		<parameter name="browser" value="firefox" />
+		<parameter name="url" value="https://google.com.ar" />
+
+		<classes>
+			<class name="ar.com.informatorio.calidad.tests.MyFifthTest" />
+		</classes>
+	</test>
+</suite>
