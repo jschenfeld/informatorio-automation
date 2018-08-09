@@ -15,21 +15,30 @@ public class MyFirstTest {
 	public static void main(String[] args) {
 		WebDriver driver = null;
         try {
-		ChromeDriverManager.getInstance().setup();
+        
+		ChromeDriverManager.getInstance().forceCache().setup();
+		//abro chrome
 		driver = new ChromeDriver();
 		driver.get("https://google.com.ar");
 		
-		WebElement searchTextBox = driver.findElement(By.name("q"));
-		searchTextBox.clear();
+		By searchBoxLocator = By.name("q");
+//		By locator = By.className("");
+//		By locator = By.cssSelector(selector)
+//		By locator = By.id(id)
+//		By locator = By.linkText(linkText)
+		WebElement searchTextBox = driver.findElement(searchBoxLocator);
 		searchTextBox.sendKeys("Resistencia wiki", Keys.TAB);
 		
-		WebElement searchButton = driver.findElement(By.name("btnK")); 
+		By buttonSearchLocator = By.name("btnK");
+		WebElement searchButton = driver.findElement(buttonSearchLocator); 
 		searchButton.click();
-		
-		WebElement firstResult = driver.findElement(By.xpath("(//*[@class='g']/descendant::a)[1]"));
+
+		By firstResultLocator = By.xpath("(//*[@class='g']/descendant::a)[1]");
+		WebElement firstResult = driver.findElement(firstResultLocator);
 		firstResult.click();
 		
-		WebElement firstHeading = driver.findElement(By.id("firstHeading"));
+		By getHearderLocator = By.id("firstHeading");
+		WebElement firstHeading = driver.findElement(getHearderLocator);
 		
 		assertEquals("Resistencia (ciudad)", firstHeading.getText());
         } finally {
@@ -38,5 +47,4 @@ public class MyFirstTest {
         	}
         }
 	}
-
 }
