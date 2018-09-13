@@ -2,49 +2,71 @@ package ar.com.informatorio.calidad.test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
+import ar.com.informatorio.calidad.pages.GoogleResultPage;
+import ar.com.informatorio.calidad.pages.GoogleSearchPage;
+import ar.com.informatorio.calidad.pages.WikiArticlePage;
+import ar.com.informatorio.calidad.pages.YahooResultPage;
+import ar.com.informatorio.calidad.pages.YahooSearchPage;
 
-public class MyFirstTest {
-
-	public static void main(String[] args) {
-		WebDriver driver = null;
-        try {
-        
-		ChromeDriverManager.getInstance().forceCache().setup();
-		//abro chrome
-		driver = new ChromeDriver();
+public class MyFirstTest extends BaseTest {
+	
+	
+	@Test(enabled = false)
+	public void buscarResistencia() {
 		driver.get("https://google.com.ar");
-		
-		By searchBoxLocator = By.name("q");
-//		By locator = By.className("");
-//		By locator = By.cssSelector(selector)
-//		By locator = By.id(id)
-//		By locator = By.linkText(linkText)
-		WebElement searchTextBox = driver.findElement(searchBoxLocator);
-		searchTextBox.sendKeys("Resistencia wiki", Keys.TAB);
-		
-		By buttonSearchLocator = By.name("btnK");
-		WebElement searchButton = driver.findElement(buttonSearchLocator); 
-		searchButton.click();
 
-		By firstResultLocator = By.xpath("(//*[@class='g']/descendant::a)[1]");
-		WebElement firstResult = driver.findElement(firstResultLocator);
-		firstResult.click();
+		GoogleSearchPage googleSearchPage = new GoogleSearchPage(driver);
+		googleSearchPage.fillTextBox("Resistencia wiki");
+		GoogleResultPage googleResultPage = googleSearchPage.clickSearchButton(driver);
+		WikiArticlePage wikiArticlePage = googleResultPage.clickFirstResult(WikiArticlePage.class);
+		assertEquals(wikiArticlePage.getFirstHeadingText(), "Resistencia (ciudad)");
+	}	
+	
+	@Test(enabled = false)
+	public void buscarFormosa() {
+			driver.get("https://google.com.ar");
+			
+			GoogleSearchPage googleSearchPage = new GoogleSearchPage(driver);
+			googleSearchPage.fillTextBox("Formosa ciudad wiki");
+			GoogleResultPage googleResultPage = googleSearchPage.clickSearchButton(driver);
+			WikiArticlePage wikiArticlePage = googleResultPage.clickFirstResult(WikiArticlePage.class);
+			assertEquals(wikiArticlePage.getFirstHeadingText(), "Formosa (ciudad)");
+	}
+	
+	@Test(dataProvider = "listaDePrueba")
+	public void buscarEnGoogle(String query, String wikiTitle) {
+			driver.get("https://google.com.ar");
+			GoogleSearchPage googleSearchPage = new GoogleSearchPage(driver);
+			googleSearchPage.fillTextBox(query);
+			GoogleResultPage googleResultPage = googleSearchPage.clickSearchButton(driver);
+			WikiArticlePage wikiArticlePage = googleResultPage.clickFirstResult(WikiArticlePage.class);
+			assertEquals(wikiArticlePage.getFirstHeadingText(), wikiTitle);
+	}
+	
+	@Test(dataProvider = "listaDePrueba")
+	public void buscarEnYahoo(String query, String result){
+		driver.get("https://ar.search.yahoo.com/");
 		
-		By getHearderLocator = By.id("firstHeading");
-		WebElement firstHeading = driver.findElement(getHearderLocator);
-		
-		assertEquals("Resistencia (ciudad)", firstHeading.getText());
-        } finally {
-        	if(null != driver){
-        		driver.quit();
-        	}
-        }
+		YahooSearchPage searchPage = new YahooSearchPage(driver);
+		searchPage.completarCampoDeBusqueda(query);
+		YahooResultPage resultPage = searchPage.clickBotonBuscar();
+		WikiArticlePage articlePage = resultPage.clickFirstResultLink();
+		assertEquals(articlePage.getFirstHeadingText(), result);		
+	}
+	
+	@DataProvider(name = "listaDePrueba")
+	public static Object[][] valoresAprobar(){
+		return new Object[][] { { "Resistencia ciudad wiki", "Resistencia (ciudad)" },
+			{ "Corrientes capital wikipedia", "Corrientes (ciudad)" }, 
+			{ "Formosa capital wiki", "Formosa (ciudad)" } };
 	}
 }
