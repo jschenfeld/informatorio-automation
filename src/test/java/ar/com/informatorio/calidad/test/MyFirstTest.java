@@ -52,7 +52,7 @@ public class MyFirstTest extends BaseTest {
 			assertEquals(wikiArticlePage.getFirstHeadingText(), wikiTitle);
 	}
 	
-	@Test(dataProvider = "listaDePrueba")
+	@Test(dataProvider = "listaDePrueba")//con esto le decimos que tome los datos del dataprovider
 	public void buscarEnYahoo(String query, String result){
 		driver.get("https://ar.search.yahoo.com/");
 		
@@ -63,7 +63,7 @@ public class MyFirstTest extends BaseTest {
 		assertEquals(articlePage.getFirstHeadingText(), result);		
 	}
 	
-	@DataProvider(name = "listaDePrueba")
+	@DataProvider(name = "listaDePrueba") //identificador del dataprovider
 	public static Object[][] valoresAprobar(){
 		return new Object[][] { { "Resistencia ciudad wiki", "Resistencia (ciudad)" },
 			{ "Corrientes capital wikipedia", "Corrientes (ciudad)" }, 
