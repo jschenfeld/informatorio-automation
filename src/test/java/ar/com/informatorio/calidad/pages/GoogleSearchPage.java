@@ -22,6 +22,7 @@ public class GoogleSearchPage extends BasePage {
 		System.out.println("Filling search text box with: " + keyword);
 		searchBoxLocator.sendKeys(keyword);
 		searchBoxLocator.sendKeys(Keys.TAB);
+
 	}
 
 	public GoogleResultPage clickSearchButton(WebDriver driver) {

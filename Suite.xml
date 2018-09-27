@@ -1,0 +1,46 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Busquedas" verbose="1"  parallel="tests" thread-count="5">
+	<parameter name="googleUrl" value="https://www.google.com.ar" />
+	<parameter name="yahooUrl" value="https://ar.search.yahoo.com/" />
+
+	<test name="Using firefox on windows">
+		<parameter name="browser" value="remoteWindowsFirefox" />
+
+
+		<classes>
+			<class name="ar.com.informatorio.calidad.test.MyFirstTest">
+				<methods>
+					<include name="buscarResistenciaEnGoogle" />
+					<include name="buscarResistenciaEnYahoo" />
+				</methods>
+			</class>
+
+		</classes>
+	</test>
+
+	<test name="Using chrome on windows">
+		<parameter name="browser" value="remoteWindowsChrome" />
+
+		<classes>
+			<class name="ar.com.informatorio.calidad.test.MyFirstTest">
+				<methods>
+					<include name="buscarResistenciaEnGoogle" />
+					<include name="buscarResistenciaEnYahoo" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Using chrome on linux">
+		<parameter name="browser" value="remoteLinuxChrome" />
+
+		<classes>
+			<class name="ar.com.informatorio.calidad.test.MyFirstTest">
+				<methods>
+					<include name="buscarResistenciaEnGoogle" />
+					<include name="buscarResistenciaEnYahoo" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

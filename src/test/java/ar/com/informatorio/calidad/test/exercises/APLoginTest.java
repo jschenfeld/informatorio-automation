@@ -1,5 +1,8 @@
 package ar.com.informatorio.calidad.test.exercises;
 
+
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.Test;
 
 import ar.com.informatorio.calidad.model.Usuario;
@@ -15,6 +18,9 @@ public class APLoginTest extends BaseTest {
 		
 		APAuthenticationPage page = new APAuthenticationPage(driver);
 		page.login("jose@jose.com", "josejose");
+		
+		assertTrue(page.customerNameIsPresent("Donald Trump"));
+
 	}
 	
 	@Test
@@ -26,6 +32,9 @@ public class APLoginTest extends BaseTest {
 		usuario.setEmail("jose@jose.com");
 		usuario.setPassword("josejose");
 		page.login(usuario);
+		
+		assertTrue(page.customerNameIsPresent("Donald Trump"));
+
 	}
 	
 	@Test
@@ -35,6 +44,9 @@ public class APLoginTest extends BaseTest {
 		APAuthenticationPage page = new APAuthenticationPage(driver);
 		Usuario usuario = new Usuario("jose@jose.com","josejose");
 		page.login(usuario);
+		
+		assertTrue(page.customerNameIsPresent("Donald Trump"));
+
 	}
 	
 	@Test
@@ -44,6 +56,9 @@ public class APLoginTest extends BaseTest {
 		APAuthenticationPage page = new APAuthenticationPage(driver);
 		Usuario usuario = new Usuario(1, "jona", "bravo", "jose@jose.com", "1111", "josejose");
 		page.login(usuario);
+		
+		assertTrue(page.customerNameIsPresent("Donald Trump"));
+
 	}
 	
 	@Test
@@ -53,5 +68,7 @@ public class APLoginTest extends BaseTest {
 		APAuthenticationPage page = new APAuthenticationPage(driver);
 		Usuario usuario = new Usuario("test@test.com","test");
 		page.login(usuario);
+		
+		assertTrue(page.customerNameIsPresent("Donald Trump"));
 	}
 }
