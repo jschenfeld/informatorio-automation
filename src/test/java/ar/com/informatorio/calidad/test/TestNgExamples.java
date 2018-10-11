@@ -1,17 +1,16 @@
 package ar.com.informatorio.calidad.test;
 
-import static org.testng.Assert.assertEquals;
-
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class TestNgExamples extends BaseTest{
+public class TestNgExamples {
 
 	@BeforeSuite
 	public void method() {
@@ -41,7 +40,7 @@ public class TestNgExamples extends BaseTest{
 	@Test
 	public void test5() {
 		System.out.println("test 2");
-		assertEquals(false, true);
+//		assertEquals(false, true);
 	}
 	
 	@Test
@@ -62,6 +61,11 @@ public class TestNgExamples extends BaseTest{
 	@AfterClass
 	public void method6() {
 		System.out.println("AfterClass este se ejecuta dsp del ultimo metodo de la clase");
+	}
+	
+	@AfterTest
+	public void afterTest() {
+		System.out.println("@AfterTest: este se ejecuta dsp del after class");
 	}
 	
 	@AfterSuite
