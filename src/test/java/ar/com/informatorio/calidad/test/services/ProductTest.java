@@ -13,6 +13,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class ProductTest {
+	
+	private Product product = new Product(666, "Proyector", 1);
 
 	@BeforeMethod
 	public void setUp() {
@@ -47,16 +49,6 @@ public class ProductTest {
 	}
 	
 	@Test
-	public void addProduct() {
-		Product product = new Product(15, "webcam", 31);
-		Response response = RestAssured.given().log().all().contentType(ContentType.JSON).body(product).post();
-		response.prettyPeek();
-		assertEquals(response.getStatusCode(), 201);
-		JsonPath json = response.jsonPath();
-		assertEquals(json.getString("message"), "El producto se ha recibido");
-	}
-	
-	@Test
 	public void addProductBadRequest() {
 		Response response = RestAssured.given().log().all()
 				.contentType(ContentType.JSON).post();
@@ -66,27 +58,39 @@ public class ProductTest {
 		assertEquals(json.getString("message"), "bad Request");
 	}
 	
-	@Test(dependsOnMethods = { "addProduct" })
-	public void getByIdUsingQueryParam() {
+	@Test
+	public void addProduct() {
 		Response response = RestAssured.given().log().all()
-				.queryParam("productId", "15").get();
+				.contentType(ContentType.JSON).body(product).post();
 		response.prettyPrint();
-		assertEquals(response.getStatusCode(), 200);
+		assertEquals(response.statusCode(), 201);
 		JsonPath json = response.jsonPath();
-		assertEquals(json.getInt("id"), 15);
-		assertEquals(json.getInt("cantidad"), 31);
-		assertEquals(json.getString("nombre"), "webcam");
+
+		assertEquals(json.getString("message"), "El producto se ha recibido");
 	}
 	
-	@Test(dependsOnMethods = { "getByIdUsingQueryParam" })
-	public void deleteProduct() {
+	@Test(dependsOnMethods = "addProduct")
+	public void getByIdUsingQueryParam() {
 		Response response = RestAssured.given().log().all()
-				.pathParam("productId", "15").delete("/{productId}");
+				.queryParam("productId", product.getId()).get();
 		response.prettyPrint();
-		assertEquals(response.getStatusCode(), 200);
+		assertEquals(response.statusCode(), 200);
+		JsonPath json = response.jsonPath();
+
+		assertEquals(json.getInt("id"), product.getId());
+		assertEquals(json.getString("nombre"), product.getNombre());
+		assertEquals(json.getInt("cantidad"), product.getCantidad());
+	}
+	
+	@Test(dependsOnMethods = "getByIdUsingQueryParam")
+	public void deleteProduct(){
+		Response response = RestAssured.given().log().all()
+				.pathParam("id", product.getId())
+				.delete("/{id}");
+		response.prettyPrint();
+		assertEquals(response.statusCode(), 200);
 		JsonPath json = response.jsonPath();
 		assertEquals(json.getString("message"), "El producto ha sido eliminado exitosamente.");
-
 	}
 	
 }
